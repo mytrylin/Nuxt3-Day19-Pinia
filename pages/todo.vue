@@ -2,19 +2,25 @@
 // 取得 stores/todo.js 定義的 useTodoStore
 const todoStore = useTodoStore();
 
+// actions 的方法可以直接解構
+const { addTodo, removeTodo } = todoStore;
+
+// state 資料和 getters 具有響應性，需經過 storeToRefs 解構
+const { todoList, todoQuantity } = storeToRefs(todoStore);
+
 const newTodo = ref("");
 
 // 新增 Todo
 const addNewTodo = () => {
   if (newTodo.value) {
-    todoStore.addTodo(newTodo.value);
+    addTodo(newTodo.value);
     newTodo.value = "";
   }
 };
 
 // 移除 Todo
-const deleteTodo= (id) => {
-  todoStore.removeTodo(id);
+const deleteTodo = (id) => {
+  removeTodo(id);
 };
 </script>
 <template>
@@ -38,7 +44,7 @@ const deleteTodo= (id) => {
         </div>
         <ul class="list-group">
           <li
-            v-for="todo in todoStore.todoList"
+            v-for="todo in todoList"
             :key="todo.id"
             class="list-group-item d-flex justify-content-between align-items-center"
           >
@@ -51,7 +57,7 @@ const deleteTodo= (id) => {
           </li>
         </ul>
 
-        <p class="mt-3">{{ todoStore.todoQuantity }}</p>
+        <p class="mt-3">{{ todoQuantity }}</p>
       </div>
     </div>
   </div>
