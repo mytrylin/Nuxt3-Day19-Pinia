@@ -24,40 +24,40 @@ const deleteTodo = (id) => {
 };
 </script>
 <template>
-  <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <h1 class="text-center mb-4">Todo List</h1>
-        <div class="input-group mb-3">
+  <div class="">
+    <div class="">
+      <div class="">
+        <h1 class="">Todo List</h1>
+        <div class="">
           <input
             v-model.trim="newTodo"
-            class="form-control"
+            class=""
             placeholder="新增待辦事項"
           />
           <button
             @click="addNewTodo"
-            class="btn btn-primary"
+            class=""
             :disabled="!newTodo.length"
           >
             新增 Todo
           </button>
         </div>
-        <ul class="list-group">
+        <ul class="">
           <li
             v-for="todo in todoList"
             :key="todo.id"
-            class="list-group-item d-flex justify-content-between align-items-center"
+            class=""
           >
             <span>
               {{ todo.text }}
             </span>
-            <button @click="deleteTodo(todo.id)" class="btn btn-danger btn-sm">
+            <button @click="deleteTodo(todo.id)" class="">
               刪除
             </button>
           </li>
         </ul>
 
-        <p class="mt-3">{{ todoQuantity }}</p>
+        <p class="">{{ todoQuantity }}</p>
       </div>
     </div>
   </div>

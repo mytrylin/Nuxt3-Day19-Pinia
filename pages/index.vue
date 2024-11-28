@@ -40,7 +40,7 @@ const reservationRoom = (roomInfo) => {
   resetUserInfo()
 }
 
-const createOrder = (roomInfo, userInfo) => {
+const submitOrder = (roomInfo, userInfo) => {
   bookingSessionId.value = makeBookingSessionId(11)
   bookingResult.value = {
     ...roomInfo,
@@ -54,107 +54,116 @@ const createOrder = (roomInfo, userInfo) => {
 </script>
 
 <template>
-  <div class="">
-    <div class="">
-      <div class="">
-        <div
-          class=""
-          v-for="room in roomsList"
-          :key="room.id"
-        >
-          <div class="">
-            <div class="">
-              <img
-                :src="room.imageUrl"
-                class="card-img-top"
-                :alt="room.name"
-              />
-            </div>
-            <div class="">
-              <div class="">
-                <h2 class="">{{ room.name }}</h2>
-                <p class="">
-                  <span v-for="(item, index) in room.roomDetails">{{ item }}</span>
-                </p>
-                <p class="">
-                  <strong>價格:{{ room.price }}</strong>
-                </p>
-                <button
-                  type="button"
-                  class=""
-                  @click="reservationRoom(room)"
-                >
-                  立即訂房
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+  <div class="flex flex-col gap-5 m-3">
+    <div
+      class="card flex flex-row content-center items-center gap-3
+        border border-solid border-sky-500 p-5 rounded-lg
+        text-gray-700
+        hover:border-sky-200 
+      "
+      v-for="room in roomsList"
+      :key="room.id"
+    >
+      <div class="img">
+        <img
+          :src="room.imageUrl"
+          class="card-img"
+          :alt="room.name"
+        />
       </div>
-      <div class="" v-if="iRoom.id">
-        <h3 class="">訂房資訊</h3>
-        <p class="">
-          {{ iRoom.name }}
-        </p>
-        <hr />
-        <section class="">
-          <h3>訂房人資訊</h3>
-          <form class="">
-            <div class="">
-              <label for="name" class=""
-                >姓名</label
-              ><input
-                id="name"
-                type="text"
-                class=""
-                placeholder="請輸入姓名"
-                name="name"
-                v-model="userInfo.name"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="phone" class=""
-                >手機號碼</label
-              ><input
-                id="phone"
-                type="tel"
-                class=""
-                placeholder="請輸入手機號碼"
-                name="phone"
-                v-model="userInfo.phone"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="email" class=""
-                >電子信箱</label
-              ><input
-                id="email"
-                type="email"
-                class=""
-                placeholder="請輸入電子信箱"
-                name="email"
-                v-model="userInfo.email"
-              />
-            </div>
-          </form>
-        </section>
-        <section class="">
-          <h3>房型基本資訊</h3>
-          <div v-for="(item, index) in iRoom?.roomDetails">{{ item }}</div>
-        </section>
-        <button
-          class=""
-          @click="createOrder(iRoom, userInfo)"
-        >
-          確認訂房
-        </button>
+      
+      <div class="txt flex flex-col">
+        <div class="mb-4">
+          <h2 class="text-3xl">{{ room.name }}</h2>
+          <p class="mt-9 mb-5">
+            <span class="border border-solid border-lime-500 rounded-lg
+              p-1 mr-1 text-lime-700 bg-lime-50 cursor-pointer
+              hover:text-lime-800 hover:bg-lime-100 hover:border-lime-700
+            "
+              v-for="(item, index) in room.roomDetails">{{ item }}</span>
+          </p>
+          <p class="text-lg">
+            <strong>價格:{{ room.price }}</strong>
+          </p>
+          <button
+            type="button"
+            class="text-lg border border-solid border-sky-400 rounded-lg cursor-pointer
+              p-1 text-sky-500
+              hover:text-sky-600 hover:bg-sky-100 hover:border-sky-600
+            "
+            @click="reservationRoom(room)"
+          >
+            立即訂房
+          </button>
+        </div>
+
+        <div class="booking" v-if="iRoom.id && (room.id === iRoom.id)">
+          <h3 class="text-2xl mb-3">訂房資訊</h3>
+          <p class="text-xl text-blue-400 mb-2">
+            {{ iRoom.name }}
+          </p>
+          <section class="">
+            <h3>訂房人資訊</h3>
+            <form class="">
+              <div class="">
+                <label for="name" class="mr-11"
+                  >姓名</label
+                ><input
+                  id="name"
+                  type="text"
+                  class=""
+                  placeholder="請輸入姓名"
+                  name="name"
+                  v-model="userInfo.name"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="phone" class="mr-3"
+                  >手機號碼</label
+                ><input
+                  id="phone"
+                  type="tel"
+                  class=""
+                  placeholder="請輸入手機號碼"
+                  name="phone"
+                  v-model="userInfo.phone"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="email" class="mr-3"
+                  >電子信箱</label
+                ><input
+                  id="email"
+                  type="email"
+                  class=""
+                  placeholder="請輸入電子信箱"
+                  name="email"
+                  v-model="userInfo.email"
+                />
+              </div>
+            </form>
+          </section>
+
+          <button
+            class="text-lg border border-solid border-red-400 rounded-lg cursor-pointer
+              p-1 text-red-500
+              hover:text-red-600 hover:bg-red-100 hover:border-red-600
+            "
+            @click="submitOrder(iRoom, userInfo)"
+          >
+            確認訂房
+          </button>
+        </div>
+
       </div>
     </div>
+
+
   </div>
 </template>
 
 <style scoped>
-.card-img-top {
+.card-img {
   max-width: 600px;
 }
 </style>
