@@ -56,7 +56,7 @@ const submitOrder = (roomInfo, userInfo) => {
 <template>
   <div class="flex flex-col gap-5 m-3">
     <div
-      class="card flex flex-row content-center items-center gap-3
+      class="card flex flex-col md:flex-row content-center items-center gap-3
         border border-solid border-sky-500 p-5 rounded-lg
         text-gray-700
         hover:border-sky-200 
@@ -164,6 +164,11 @@ const submitOrder = (roomInfo, userInfo) => {
 
 <style scoped>
 .card-img {
-  max-width: 600px;
+  max-width: 100%;
+}
+@media (min-width: 768px) {
+  .card-img {
+    max-width: 600px;
+  }
 }
 </style>
